@@ -7,9 +7,15 @@ module Wonga
       end
 
       def handle_message(message)
-        @logger.info "Updating dns record deleted status for Request:#{message['pantry_request_id']}, Name:#{message['instance_name']}, InstanceID:#{message['instance_id']}"
-        @api_client.update_ec2_instance(message['pantry_request_id'], { joined: false, instance_id: message['instance_id'] })
-        @logger.info "Updating dns record deleted joined status for Request:#{message['pantry_request_id']} succeeded"
+        @logger.info "Updating dns record deleted status for Request:#{message['id']}, Name:#{message['node']}}"
+        @api_client.send_put_request(
+          "/api/ec2_instances/#{message['id']}",
+          { 
+            id: message['id'],
+            joined: false
+          }
+        )
+        @logger.info "Updating dns record deleted joined status for Request:#{message['id']} succeeded"
       end
     end
   end
