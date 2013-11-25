@@ -10,9 +10,9 @@ module Wonga
         @logger.info "Updating dns record deleted status for Request:#{message['id']}, Name:#{message['node']}}"
         @api_client.send_put_request(
           "/api/ec2_instances/#{message['id']}",
-          { 
-            id: message['id'],
-            joined: false
+          {
+            event: :terminated,
+            dns: :false
           }
         )
         @logger.info "Updating dns record deleted joined status for Request:#{message['id']} succeeded"
