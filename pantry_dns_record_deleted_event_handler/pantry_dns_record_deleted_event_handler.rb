@@ -11,7 +11,6 @@ module Wonga
         message[:event] = :terminated
         message[:dns] = :false
         @api_client.send_put_request("/api/ec2_instances/#{message['id']}", message)
-        @logger.info "Updating dns record deleted joined status for Request:#{message['id']} succeeded"
       end
     end
   end
